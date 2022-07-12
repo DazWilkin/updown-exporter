@@ -92,6 +92,11 @@ docker.io/prom/prometheus:v2.36.2 \
 --web.enable-lifecycle
 ```
 
+Then browse:
+
++ [Exporter](http://localhost:8080/metrics)
++ [Prometheus](http://localhost:9090/targets)
+
 ## Podman
 
 ```bash
