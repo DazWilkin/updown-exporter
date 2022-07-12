@@ -66,6 +66,10 @@ func (c *Client) GetChecks() ([]Check, error) {
 		return []Check{}, err
 	}
 
+	// log.Info("Result",
+	// 	"checks", checks,
+	// )
+
 	return checks, nil
 }
 
@@ -112,6 +116,9 @@ func (c *Client) GetCheckMetrics(token string) (Metrics, error) {
 		return Metrics{}, err
 	}
 
-	return metrics, nil
+	log.Info("Result",
+		"metrics", metrics,
+	)
 
+	return metrics, nil
 }
