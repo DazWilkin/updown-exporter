@@ -8,6 +8,7 @@ import (
 	"github.com/go-logr/stdr"
 )
 
+// TestGetChecks tests the Client's GetChecks method
 func TestGetChecks(t *testing.T) {
 	log := stdr.NewWithOptions(stdlog.New(os.Stderr, "", stdlog.LstdFlags), stdr.Options{LogCaller: stdr.All})
 	log = log.WithName("TestGetChecks")
@@ -24,6 +25,7 @@ func TestGetChecks(t *testing.T) {
 	}
 }
 
+// TestGetCheckMetrics tests the Client's GetCheckMetrics method
 func TestGetCheckMetrics(t *testing.T) {
 	log := stdr.NewWithOptions(stdlog.New(os.Stderr, "", stdlog.LstdFlags), stdr.Options{LogCaller: stdr.All})
 	log = log.WithName("TestGetMetrics")
