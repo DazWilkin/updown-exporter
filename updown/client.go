@@ -116,9 +116,9 @@ func (c *Client) GetCheckMetrics(token string) (Metrics, error) {
 		return Metrics{}, err
 	}
 
-	log.Info("Result",
-		"metrics", metrics,
-	)
+	// log.Info("Result",
+	// 	"metrics", metrics,
+	// )
 
 	return metrics, nil
 }
