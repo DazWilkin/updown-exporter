@@ -10,7 +10,7 @@
 
 ## Image
 
-`ghcr.io/dazwilkin/updown-exporter:c086e462d07c2ebb5a4dde7113871e99d629e026`
+`ghcr.io/dazwilkin/updown-exporter:ce7fc81da54e017cd62ebfc433fa901b43e60eb0`
 
 ## API Key
 
@@ -35,7 +35,7 @@ go run . \
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:c086e462d07c2ebb5a4dde7113871e99d629e026"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:ce7fc81da54e017cd62ebfc433fa901b43e60eb0"
 
 podman run \
 --interactive --tty --rm \
