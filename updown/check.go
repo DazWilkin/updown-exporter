@@ -8,7 +8,7 @@ type Check struct {
 	LastStatus        uint16   `json:"last_status"`
 	Uptime            float32  `json:"uptime"`
 	Down              bool     `json:"down"`
-	DownSince         uint     `json:"down_since"`
+	DownSince         string   `json:"down_since"`
 	Error             string   `json:"error"`
 	Period            uint     `json:"period"`
 	ApdexThreshold    float32  `json:"apdex_t"`
