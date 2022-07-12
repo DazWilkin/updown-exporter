@@ -11,10 +11,10 @@ import (
 
 // ChecksCollector is a type that represents updown Checks
 type ChecksCollector struct {
-	System System
-	Client *updown.Client
-	Log    logr.Logger
-	Up     *prometheus.Desc
+	System  System
+	Client  *updown.Client
+	Log     logr.Logger
+	Enabled *prometheus.Desc
 }
 
 // NewChecksCollector is a function that returns a new ChecksCollector
@@ -24,9 +24,9 @@ func NewChecksCollector(s System, client *updown.Client, log logr.Logger) *Check
 		System: s,
 		Client: client,
 		Log:    log,
-		Up: prometheus.NewDesc(
-			prometheus.BuildFQName(s.Namespace, subsystem, "up"),
-			"updown check",
+		Enabled: prometheus.NewDesc(
+			prometheus.BuildFQName(s.Namespace, subsystem, "enabled"),
+			"status of check (enabled=1)",
 			[]string{
 				"token",
 				"url",
@@ -44,7 +44,7 @@ func (c *ChecksCollector) Collect(ch chan<- prometheus.Metric) {
 
 	checks, err := c.Client.GetChecks()
 	if err != nil {
-		log.Info("Unable to get checks")
+		log.Info("Unable to get Checks")
 		return
 	}
 
@@ -54,7 +54,7 @@ func (c *ChecksCollector) Collect(ch chan<- prometheus.Metric) {
 		go func(check updown.Check) {
 			defer wg.Done()
 			ch <- prometheus.MustNewConstMetric(
-				c.Up,
+				c.Enabled,
 				prometheus.CounterValue,
 				func(enabled bool) (result float64) {
 					if enabled {
@@ -77,5 +77,5 @@ func (c *ChecksCollector) Collect(ch chan<- prometheus.Metric) {
 // Describe implements Prometheus' Collector interface is used to describe metrics
 func (c *ChecksCollector) Describe(ch chan<- *prometheus.Desc) {
 	// log := c.Log.WithName("Describe")
-	ch <- c.Up
+	ch <- c.Enabled
 }
