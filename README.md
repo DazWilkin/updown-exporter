@@ -48,6 +48,8 @@ ${IMAGE} \
   --path=/metrics
 ```
 
+Then browse `http://localhost:8080/metrics` to view the metrics.
+
 ## Prometheus
 
 `prometheus.yml`:
@@ -63,6 +65,70 @@ scrape_configs:
   - targets:
     - "localhost:8080"
 ```
+
+## Docker
+
+```bash
+API_KEY="[YOUR-API-KEY]"
+
+IMAGE="ghcr.io/dazwilkin/updown-exporter:829a77074aa83d5858d384445aa0fb41bc51c344"
+
+docker run \
+--detach --tty --rm \
+--name="updown-exporter" \
+--env=API_KEY=${API_KEY} \
+--publish=8080:8080/tcp \
+${IMAGE} \
+  --endpoint=0.0.0.0:8080 \
+  --path=/metrics
+
+docker run \
+--detach --rm --tty \
+--name="prometheus" \
+--publish=9090:9090/tcp \
+--volume=${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml:ro \
+docker.io/prom/prometheus:v2.36.2 \
+--config.file=/etc/prometheus/prometheus.yml \
+--web.enable-lifecycle
+```
+
+## Podman
+
+```bash
+API_KEY="[YOUR-API-KEY]"
+
+IMAGE="ghcr.io/dazwilkin/updown-exporter:829a77074aa83d5858d384445aa0fb41bc51c344"
+
+POD="updown-exporter"
+
+podman pod create \
+--name=${POD} \
+--publish=8080:8080/tcp \
+--publish=9090:9090/tcp
+
+podman run \
+--interactive --tty --rm \
+--pod=${POD} \
+--name="updown-exporter" \
+--env=API_KEY=${API_KEY} \
+${IMAGE} \
+  --endpoint=0.0.0.0:8080 \
+  --path=/metrics
+
+podman run \
+--detach --rm --tty \
+--pod=${POD} \
+--name="prometheus" \
+--volume=${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml:ro \
+docker.io/prom/prometheus:v2.36.2 \
+--config.file=/etc/prometheus/prometheus.yml \
+--web.enable-lifecycle
+```
+
+Then browse:
+
++ [Exporter](http://localhost:8080/metrics)
++ [Prometheus](http://localhost:9090/targets)
 
 <hr/>
 <br/>
