@@ -11,6 +11,7 @@ type Check struct {
 	DownSince         uint     `json:"down_since"`
 	Error             string   `json:"error"`
 	Period            uint     `json:"period"`
+	ApdexThreshold    float32  `json:"apdex_t"`
 	Enabled           bool     `json:"enabled"`
 	Published         bool     `json:"published"`
 	DisabledLocations []string `json:"disabled_locations"`
