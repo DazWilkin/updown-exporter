@@ -68,3 +68,50 @@ func (c *Client) GetChecks() ([]Check, error) {
 
 	return checks, nil
 }
+
+// GetCheckMetrics is a method that returns a list of updown metrics for a check
+// The method implemnents updown's /api/checks/:token/metrics
+// See: https://updown.io/api#GET-/api/checks/:token/metrics
+func (c *Client) GetCheckMetrics(token string) (Metrics, error) {
+	log := c.Log.WithName("GetCheckMetrics")
+
+	if token == "" {
+		msg := "method requires a valid Check token"
+		log.Info(msg)
+		return Metrics{}, fmt.Errorf(msg)
+	}
+
+	url := fmt.Sprintf("%s/%s/%s/metrics?api-key=%s", root, "api/checks", token, c.APIKey)
+
+	rqst, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Info("Unable to create new request")
+		return Metrics{}, err
+	}
+
+	rqst.Header.Add("Content-Type", "application/json")
+
+	resp, err := c.Client.Do(rqst)
+	if err != nil {
+		log.Info("Unable to do request")
+		return Metrics{}, err
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Info("Unable to read response body")
+		return Metrics{}, err
+	}
+
+	// log.Info("Body",
+	// 	"body", string(body),
+	// )
+
+	metrics := Metrics{}
+	if err := json.Unmarshal(body, &metrics); err != nil {
+		return Metrics{}, err
+	}
+
+	return metrics, nil
+
+}
