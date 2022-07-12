@@ -1,5 +1,6 @@
 package updown
 
+// Check is a type that represents an updown Check
 type Check struct {
 	Token             string   `json:"token"`
 	URL               string   `json:"url"`
@@ -18,6 +19,8 @@ type Check struct {
 	NextCheckAt       string   `json:"next_check_at"`
 	SSL               SSL      `json:"ssl"`
 }
+
+// SSL is a type that represents the SSL subtype of an updown Check
 type SSL struct {
 	TestedAt  string `json:"tested_at"`
 	ExpiresAt string `json:"expires_at"`

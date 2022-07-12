@@ -9,16 +9,18 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-type UpDownCollector struct {
+// ChecksCollector is a type that represents updown Checks
+type ChecksCollector struct {
 	System System
 	Client *updown.Client
 	Log    logr.Logger
 	Up     *prometheus.Desc
 }
 
-func NewUpDownCollector(s System, client *updown.Client, log logr.Logger) *UpDownCollector {
+// NewChecksCollector is a function that returns a new ChecksCollector
+func NewChecksCollector(s System, client *updown.Client, log logr.Logger) *ChecksCollector {
 	subsystem := "checks"
-	return &UpDownCollector{
+	return &ChecksCollector{
 		System: s,
 		Client: client,
 		Log:    log,
@@ -35,7 +37,9 @@ func NewUpDownCollector(s System, client *updown.Client, log logr.Logger) *UpDow
 		),
 	}
 }
-func (c *UpDownCollector) Collect(ch chan<- prometheus.Metric) {
+
+// Collect implements Prometheus' Collector interface and is used to collect metrics
+func (c *ChecksCollector) Collect(ch chan<- prometheus.Metric) {
 	log := c.Log.WithName("Collect")
 
 	checks, err := c.Client.GetChecks()
@@ -69,7 +73,9 @@ func (c *UpDownCollector) Collect(ch chan<- prometheus.Metric) {
 	}
 	wg.Wait()
 }
-func (c *UpDownCollector) Describe(ch chan<- *prometheus.Desc) {
+
+// Describe implements Prometheus' Collector interface is used to describe metrics
+func (c *ChecksCollector) Describe(ch chan<- *prometheus.Desc) {
 	// log := c.Log.WithName("Describe")
 	ch <- c.Up
 }

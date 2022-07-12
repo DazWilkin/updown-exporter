@@ -126,7 +126,7 @@ func main() {
 		StartTime: StartTime,
 	}
 	registry.MustRegister(collector.NewExporterCollector(s, b, log))
-	registry.MustRegister(collector.NewUpDownCollector(s, client, log))
+	registry.MustRegister(collector.NewChecksCollector(s, client, log))
 
 	mux := http.NewServeMux()
 	mux.Handle("/", http.HandlerFunc(handleRoot))

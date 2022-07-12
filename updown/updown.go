@@ -13,12 +13,14 @@ const (
 	root string = "https://updown.io"
 )
 
+// Client is a type that represents an updown (REST) client
 type Client struct {
 	APIKey string
 	Client *http.Client
 	Log    logr.Logger
 }
 
+// NewClient is a function that returns a new Client
 func NewClient(apiKey string, log logr.Logger) *Client {
 	return &Client{
 		APIKey: apiKey,
@@ -26,6 +28,10 @@ func NewClient(apiKey string, log logr.Logger) *Client {
 		Log:    log,
 	}
 }
+
+// GetChecks is a method that returns a list of updown checks
+// The method implements updown's /api/checks method
+// See: https://updown.io/api#GET-/api/checks
 func (c *Client) GetChecks() ([]Check, error) {
 	log := c.Log.WithName("GetChecks")
 
