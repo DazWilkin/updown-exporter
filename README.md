@@ -50,12 +50,13 @@ ${IMAGE} \
 
 ## Prometheus
 
+`prometheus.yml`:
 ```YAML
 global:
   scrape_interval: 1m
   evaluation_interval: 1m
 
-
+scrape_configs:
   # updown Exporter
 - job_name: "updown-exporter"
   static_configs:
