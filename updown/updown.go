@@ -51,9 +51,9 @@ func (c *Client) GetChecks() ([]Check, error) {
 		return []Check{}, err
 	}
 
-	log.Info("Body",
-		"body", string(body),
-	)
+	// log.Info("Body",
+	// 	"body", string(body),
+	// )
 
 	checks := []Check{}
 	if err := json.Unmarshal(body, &checks); err != nil {
