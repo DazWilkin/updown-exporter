@@ -6,9 +6,13 @@
 
 ## Metrics
 
+Metrics names are prefixed `updown_`.
+
 |Name|Type|Description|
 |----|----|-----------|
-|`Up`|Counter|Check metrics|
+|`checks_enabled`|Counter|Status of Check (enabled=1)|
+|`exporter_build_info`|Counter|Exporter build info|
+|`metrics_response_times`|Histogram|Histogram of a Check's response times|
 
 ## Image
 
@@ -108,7 +112,7 @@ POD="updown-exporter"
 
 podman pod create \
 --name=${POD} \
---publish=8080:8080/tcp \
+--publish=5555:8080/tcp \
 --publish=9090:9090/tcp
 
 podman run \
