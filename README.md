@@ -1,14 +1,16 @@
 # Prometheus Exporter for [updown.io](https://updown.io)
 
+[![build-containers](https://github.com/DazWilkin/updown-exporter/actions/workflows/build.yml/badge.svg)](https://github.com/DazWilkin/updown-exporter/actions/workflows/build.yml)
+
 ## Metrics
 
 |Name|Type|Description|
 |----|----|-----------|
-|`Up`|Counter||
+|`Up`|Counter|Check metrics|
 
 ## Image
 
-ghcr.io/dazwilkin/updown-exporter:dc8643e8cb65fef84d4e4f2747fa55b42cb275f3
+`ghcr.io/dazwilkin/updown-exporter:dc8643e8cb65fef84d4e4f2747fa55b42cb275f3`
 
 ## API Key
 
@@ -58,3 +60,7 @@ global:
   - targets:
     - "localhost:8080"
 ```
+
+<hr/>
+<br/>
+<a href="https://www.buymeacoffee.com/dazwilkin" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>

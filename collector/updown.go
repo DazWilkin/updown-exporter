@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"strconv"
 	"sync"
 
 	"github.com/DazWilkin/updown-exporter/updown"
@@ -16,7 +17,7 @@ type UpDownCollector struct {
 }
 
 func NewUpDownCollector(s System, client *updown.Client, log logr.Logger) *UpDownCollector {
-	subsystem := "updown"
+	subsystem := "checks"
 	return &UpDownCollector{
 		System: s,
 		Client: client,
@@ -25,7 +26,10 @@ func NewUpDownCollector(s System, client *updown.Client, log logr.Logger) *UpDow
 			prometheus.BuildFQName(s.Namespace, subsystem, "up"),
 			"updown check",
 			[]string{
+				"token",
 				"url",
+				"status",
+				"ssl_valid",
 			},
 			nil,
 		),
@@ -55,7 +59,10 @@ func (c *UpDownCollector) Collect(ch chan<- prometheus.Metric) {
 					return result
 				}(check.Enabled),
 				[]string{
+					check.Token,
 					check.URL,
+					strconv.FormatUint(uint64(check.LastStatus), 10),
+					strconv.FormatBool(check.SSL.Valid),
 				}...,
 			)
 		}(check)
