@@ -12,7 +12,7 @@
 
 ## Image
 
-`ghcr.io/dazwilkin/updown-exporter:4fbfb3f3a615693a58980787f20fb4348907a5a7`
+`ghcr.io/dazwilkin/updown-exporter:eb3e9193a9d3a73ce603744f0ec89897da22abc9`
 
 ## API Key
 
@@ -37,7 +37,7 @@ go run . \
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:4fbfb3f3a615693a58980787f20fb4348907a5a7"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:eb3e9193a9d3a73ce603744f0ec89897da22abc9"
 
 podman run \
 --interactive --tty --rm \
@@ -71,7 +71,7 @@ scrape_configs:
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:4fbfb3f3a615693a58980787f20fb4348907a5a7"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:eb3e9193a9d3a73ce603744f0ec89897da22abc9"
 
 docker run \
 --detach --tty --rm \
@@ -102,7 +102,7 @@ Then browse:
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:4fbfb3f3a615693a58980787f20fb4348907a5a7"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:eb3e9193a9d3a73ce603744f0ec89897da22abc9"
 
 POD="updown-exporter"
 
