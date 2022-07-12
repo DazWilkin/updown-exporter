@@ -26,6 +26,18 @@ type ByResponseTime struct {
 	Under4000 uint `json:"under4000"`
 }
 
+// ToBuckets is a method that converts ByResponseTIme structs into Prometheus buckets
+func (x *ByResponseTime) ToBuckets() map[float64]uint64 {
+	return map[float64]uint64{
+		125.0:  uint64(x.Under125),
+		250.0:  uint64(x.Under250),
+		500.0:  uint64(x.Under500),
+		1000.0: uint64(x.Under1000),
+		2000.0: uint64(x.Under2000),
+		4000.0: uint64(x.Under4000),
+	}
+}
+
 // Timings is a type that represents the Timings subtype of updown Metrics
 type Timings struct {
 	Redirect   uint `json:"redirect"`
