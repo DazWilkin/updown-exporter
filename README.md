@@ -16,7 +16,7 @@ Metrics names are prefixed `updown_`.
 
 ## Image
 
-`ghcr.io/dazwilkin/updown-exporter:760beaedd9b9a06519be38049ad82f948da536d2`
+`ghcr.io/dazwilkin/updown-exporter:c85fb808ac3dd021961740e5ca79b845bf6ad44c`
 
 ## API Key
 
@@ -41,7 +41,7 @@ go run . \
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:760beaedd9b9a06519be38049ad82f948da536d2"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:c85fb808ac3dd021961740e5ca79b845bf6ad44c"
 
 podman run \
 --interactive --tty --rm \
@@ -75,7 +75,7 @@ scrape_configs:
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:760beaedd9b9a06519be38049ad82f948da536d2"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:c85fb808ac3dd021961740e5ca79b845bf6ad44c"
 
 docker run \
 --detach --tty --rm \
@@ -106,7 +106,7 @@ Then browse:
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:760beaedd9b9a06519be38049ad82f948da536d2"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:c85fb808ac3dd021961740e5ca79b845bf6ad44c"
 
 POD="updown-exporter"
 
