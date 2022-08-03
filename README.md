@@ -139,6 +139,29 @@ Then browse:
 + [Exporter](http://localhost:8080/metrics)
 + [Prometheus](http://localhost:9090/targets)
 
+## Raspberry Pi
+
+```bash
+if [ "$(getconf LONG_BIT)" -eq 64 ]
+then
+  # 64-bit Raspian
+  ARCH="GOARCH=arm64"
+  TAG="arm64"
+else
+  # 32-bit Raspian
+  ARCH="GOARCH=arm GOARM=7"
+  TAG="arm32v7"
+fi
+
+podman build \
+--build-arg=GOLANG_OPTIONS="CGO_ENABLED=0 GOOS=linux ${ARCH}" \
+--build-arg=COMMIT=$(git rev-parse HEAD) \
+--build-arg=VERSION=$(uname --kernel-release) \
+--tag=ghcr.io/dazwilkin/updown-exporter:${TAG} \
+--file=./Dockerfile \
+.
+```
+
 <hr/>
 <br/>
 <a href="https://www.buymeacoffee.com/dazwilkin" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
