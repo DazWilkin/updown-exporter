@@ -1,5 +1,4 @@
-ARG GOLANG_VERSION=1.18
-ARG GOLANG_OPTIONS="CGO_ENABLED=0 GOOS=linux GOARCH=amd64"
+ARG GOLANG_VERSION=1.20
 
 FROM docker.io/golang:${GOLANG_VERSION} as build
 
@@ -17,7 +16,7 @@ COPY main.go .
 COPY collector collector
 COPY updown updown
 
-RUN env ${GOLANG_OPTIONS} \
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     go build \
     -ldflags "-X main.OSVersion=${VERSION} -X main.GitCommit=${COMMIT}" \
     -a -installsuffix cgo \
@@ -25,7 +24,7 @@ RUN env ${GOLANG_OPTIONS} \
     .
 
 
-FROM gcr.io/distroless/base-debian11
+FROM gcr.io/distroless/static
 
 LABEL org.opencontainers.image.source https://github.com/DazWilkin/updown-exporter
 
