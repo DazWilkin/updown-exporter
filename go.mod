@@ -3,7 +3,7 @@ module github.com/DazWilkin/updown-exporter
 go 1.21
 
 require (
-	github.com/go-logr/logr v1.2.4
+	github.com/go-logr/logr v1.3.0
 	github.com/go-logr/stdr v1.2.2
 	github.com/prometheus/client_golang v1.17.0
 )
