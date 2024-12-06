@@ -18,6 +18,24 @@ Metrics names are prefixed `updown_`.
 
 `ghcr.io/dazwilkin/updown-exporter:ba2bfa2242aea745c876ef36c6d38f75f1a94709`
 
+## [Sigstore](https://sigstore.dev)
+
+`updown-exporter` container images are being signed by Sigstore and may be verified:
+
+```bash
+cosign verify \
+--key=./cosign.pub \
+ghcr.io/dazwilkin/updown-exporter:1234567890123456789012345678901234567890
+```
+
+NOTE `cosign.pub` may be downloaded [here](./cosign.pub)
+
+To install `cosign`, e.g.:
+
+```bash
+go install github.com/sigstore/cosign/cmd/cosign@latest
+```
+
 ## API Key
 
 The Exporter needs access to an updown API Key
