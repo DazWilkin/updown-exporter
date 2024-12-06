@@ -2,3 +2,7 @@
 .vscode/
 
 .env.test
+
+# Sigstore
+cosign.key
+

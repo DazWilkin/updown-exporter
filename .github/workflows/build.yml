@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: QEMU
+        uses: docker/setup-qemu-action@v3
       - name: Setup
         uses: docker/setup-buildx-action@v3
       - name: Login
@@ -22,10 +24,12 @@ jobs:
           password: ${{ secrets.GHCR }}
       - name: Get kernel version
         run: echo "VERSION=$(uname --kernel-release)" >> ${GITHUB_ENV}
-      - name: Exporter
-        uses: docker/build-push-action@v5
+      - name: Buildx Multi-platform Docker Images
+        id: build-push-action-multi-platform
+        uses: docker/build-push-action@v6
         with:
           context: .
+          platforms: linux/amd64,linux/arm64/v7,linux/arm64
           file: ./Dockerfile
           build-args: |
             TOKEN=${{ secrets.GHCR }}
@@ -33,23 +37,25 @@ jobs:
             COMMIT=${{ github.sha }}
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           push: true
-      # - name: Cosign installer
-      #   uses: sigstore/cosign-installer@main
-      # - name: Write signing key to disk (only needed for `cosign sign --key`)
-      #   run: echo "${{ secrets.SIGNING }}" > ./cosign.key
-      # - name: Sign container image
-      #   run: |
-      #     cosign sign \
-      #     --key=./cosign.key \
-      #     --annotations="repo=${{ github.repository }}" \
-      #     --annotations="workflow=${{ github.workflow }}" \
-      #     --annotations="commit=${{ github.sha }}" \
-      #     --annotations="version=${{ env.VERSION }}" \
-      #     ghcr.io/${{ env.REPO }}:${{ github.sha }}
-      #   env:
-      #     COSIGN_PASSWORD: ""          
+      - name: Cosign installer
+        uses: sigstore/cosign-installer@main
+      - name: Write signing key to disk (only needed for `cosign sign --key`)
+        run: echo "${{ secrets.SIGNING }}" > ./cosign.key
+      - name: Sign container image
+        run: |-
+          DIGEST=${{ steps.docker-build-push-multi-platform.outputs.digest }}
+
+          cosign sign \
+          --key=./cosign.key \
+          --annotations="repo=${{ github.repository }}" \
+          --annotations="workflow=${{ github.workflow }}" \
+          --annotations="commit=${{ github.sha }}" \
+          --annotations="version=${{ env.VERSION }}" \
+          ghcr.io/${{ env.REPO}}@${DIGEST}
+        env:
+          COSIGN_PASSWORD: ""
       - name: Revise occurrences of the image
-        run: |
+        run: |-
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions"
 
