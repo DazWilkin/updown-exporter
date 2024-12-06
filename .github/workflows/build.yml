@@ -25,7 +25,7 @@ jobs:
       - name: Get kernel version
         run: echo "VERSION=$(uname --kernel-release)" >> ${GITHUB_ENV}
       - name: Buildx Multi-platform Docker Images
-        id: build-push-action-multi-platform
+        id: docker-build-push-multi-platform
         uses: docker/build-push-action@v6
         with:
           context: .
