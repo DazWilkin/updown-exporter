@@ -16,7 +16,7 @@ Metrics names are prefixed `updown_`.
 
 ## Image
 
-`ghcr.io/dazwilkin/updown-exporter:ba2bfa2242aea745c876ef36c6d38f75f1a94709`
+`ghcr.io/dazwilkin/updown-exporter:68b7deaf3a91182d3500928ba7a42068f0cc2cc8`
 
 ## [Sigstore](https://sigstore.dev)
 
@@ -25,7 +25,7 @@ Metrics names are prefixed `updown_`.
 ```bash
 cosign verify \
 --key=./cosign.pub \
-ghcr.io/dazwilkin/updown-exporter:1234567890123456789012345678901234567890
+ghcr.io/dazwilkin/updown-exporter:68b7deaf3a91182d3500928ba7a42068f0cc2cc8
 ```
 
 NOTE `cosign.pub` may be downloaded [here](./cosign.pub)
@@ -59,7 +59,7 @@ go run . \
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:ba2bfa2242aea745c876ef36c6d38f75f1a94709"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:68b7deaf3a91182d3500928ba7a42068f0cc2cc8"
 
 podman run \
 --interactive --tty --rm \
@@ -93,7 +93,7 @@ scrape_configs:
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:ba2bfa2242aea745c876ef36c6d38f75f1a94709"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:68b7deaf3a91182d3500928ba7a42068f0cc2cc8"
 
 docker run \
 --detach --tty --rm \
@@ -124,7 +124,7 @@ Then browse:
 ```bash
 API_KEY="[YOUR-API-KEY]"
 
-IMAGE="ghcr.io/dazwilkin/updown-exporter:ba2bfa2242aea745c876ef36c6d38f75f1a94709"
+IMAGE="ghcr.io/dazwilkin/updown-exporter:68b7deaf3a91182d3500928ba7a42068f0cc2cc8"
 
 POD="updown-exporter"
 
