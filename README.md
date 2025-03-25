@@ -180,6 +180,19 @@ podman build \
 .
 ```
 
+## Similar Exporters
+
++ [Prometheus Exporter for Azure](https://github.com/DazWilkin/azure-exporter)
++ [Prometheus Exporter for crt.sh](https://github.com/DazWilkin/crtsh-exporter)
++ [Prometheus Exporter for Fly.io](https://github.com/DazWilkin/fly-exporter)
++ [Prometheus Exporter for GoatCounter](https://github.com/DazWilkin/goatcounter-exporter)
++ [Prometheus Exporter for Google Cloud](https://github.com/DazWilkin/gcp-exporter)
++ [Prometheus Exporter for Koyeb](https://github.com/DazWilkin/koyeb-exporter)
++ [Prometheus Exporter for Linode](https://github.com/DazWilkin/linode-exporter)
++ [Prometheus Exporter for PorkBun](https://github.com/DazWilkin/porkbun-exporter)
++ [Prometheus Exporter for updown.io](https://github.com/DazWilkin/updown-exporter)
++ [Prometheus Exporter for Vultr](https://github.com/DazWilkin/vultr-exporter)
+
 <hr/>
 <br/>
 <a href="https://www.buymeacoffee.com/dazwilkin" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
