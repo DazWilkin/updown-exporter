@@ -2,9 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"html/template"
-	"log"
 	stdlog "log"
 	"net/http"
 	"os"
@@ -14,6 +12,7 @@ import (
 	"github.com/DazWilkin/updown-exporter/collector"
 	"github.com/DazWilkin/updown-exporter/updown"
 
+	"github.com/go-logr/logr"
 	"github.com/go-logr/stdr"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -65,23 +64,27 @@ var (
 	endpoint    = flag.String("endpoint", "0.0.0.0:8080", "The endpoint of the HTTP server")
 	metricsPath = flag.String("path", "/metrics", "The path on which Prometheus metrics will be served")
 )
-var (
-	name string = fmt.Sprintf("%s_%s", namespace, subsystem)
-)
 
 type Content struct {
 	MetricsPath string
 }
 
-func handleHealthz(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("ok"))
+func handleHealthz(log logr.Logger) http.HandlerFunc {
+	return func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		if _, err := w.Write([]byte("ok")); err != nil {
+			log.Error(err, "unable to write response")
+		}
+	}
 }
-func handleRoot(w http.ResponseWriter, _ *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=UTF-8")
-	t := template.Must(template.New("content").Parse(rootTemplate))
-	if err := t.ExecuteTemplate(w, "content", Content{MetricsPath: *metricsPath}); err != nil {
-		log.Fatal("unable to execute template")
+func handleRoot(log logr.Logger) http.HandlerFunc {
+	return func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=UTF-8")
+		t := template.Must(template.New("content").Parse(rootTemplate))
+		if err := t.ExecuteTemplate(w, "content", Content{MetricsPath: *metricsPath}); err != nil {
+			log.Error(err, "unable to execute template")
+			w.WriteHeader(http.StatusInternalServerError)
+		}
 	}
 }
 
@@ -130,8 +133,8 @@ func main() {
 	registry.MustRegister(collector.NewMetricsCollector(s, client, log))
 
 	mux := http.NewServeMux()
-	mux.Handle("/", http.HandlerFunc(handleRoot))
-	mux.Handle("/healthz", http.HandlerFunc(handleHealthz))
+	mux.Handle("/", handleRoot(log))
+	mux.Handle("/healthz", handleHealthz(log))
 	mux.Handle(*metricsPath, promhttp.HandlerFor(registry, promhttp.HandlerOpts{}))
 
 	log.Info("Starting",

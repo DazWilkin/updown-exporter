@@ -2,8 +2,9 @@ package updown
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/go-logr/logr"
@@ -51,7 +52,7 @@ func (c *Client) GetChecks() ([]Check, error) {
 		return []Check{}, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Info("Unable to read response body")
 		return []Check{}, err
@@ -82,7 +83,7 @@ func (c *Client) GetCheckMetrics(token string) (Metrics, error) {
 	if token == "" {
 		msg := "method requires a valid Check token"
 		log.Info(msg)
-		return Metrics{}, fmt.Errorf(msg)
+		return Metrics{}, errors.New(msg)
 	}
 
 	url := fmt.Sprintf("%s/%s/%s/metrics?api-key=%s", root, "api/checks", token, c.APIKey)
@@ -101,7 +102,7 @@ func (c *Client) GetCheckMetrics(token string) (Metrics, error) {
 		return Metrics{}, err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Info("Unable to read response body")
 		return Metrics{}, err
