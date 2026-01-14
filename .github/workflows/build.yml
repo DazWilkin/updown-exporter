@@ -18,11 +18,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Setup
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: stable
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v8
+        uses: golangci/golangci-lint-action@v9
         with:
           version: latest
   updown-exporter:
