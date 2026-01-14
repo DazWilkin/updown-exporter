@@ -3,13 +3,20 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - '**.md'
+      - '**.json'
+      - '**.jsonnet'
+      - '**.key'
+      - '**.pub'
+      - '**.sh'
 jobs:
   golangci:
     name: lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup
         uses: actions/setup-go@v5
         with:
@@ -17,7 +24,7 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v8
         with:
-          version: v2.1.0
+          version: latest
   updown-exporter:
     name: updown-exporter
     runs-on: ubuntu-latest
@@ -25,7 +32,7 @@ jobs:
       REPO: dazwilkin/updown-exporter
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: QEMU
         uses: docker/setup-qemu-action@v3
       - name: Setup
@@ -43,7 +50,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm64
           file: ./Dockerfile
           build-args: |
             TOKEN=${{ secrets.GHCR }}
@@ -51,6 +58,8 @@ jobs:
             COMMIT=${{ github.sha }}
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Cosign installer
         uses: sigstore/cosign-installer@main
       - name: Write signing key to disk (only needed for `cosign sign --key`)
